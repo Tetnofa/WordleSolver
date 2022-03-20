@@ -10,13 +10,13 @@ using namespace std;
 
 vector<char[5]> word_array;
 vector<string> all_words;
-
 //function declarations
 bool LoadInitialVector();
 string getWord();
 string getWordColours();
 bool checkValidWord(string word);
 bool contains_non_alpha(string entered_word);
+void yellowLettersFilter();
 //bool checkValidColours();
 
 int main(int argc, const char * argv[]) {
@@ -111,4 +111,45 @@ bool checkValidWord(string entered_word){
 bool contains_non_alpha(string entered_word){
 	return std::find_if(entered_word.begin(), entered_word.end(),
                    std::not1(std::ptr_fun((int(*)(int))std::isalpha))) != entered_word.end();
+}
+
+void yellowLettersFilter(string entered_word, string word_colours){
+	vector< pair<int, char> > yellowLetters;
+	vector< pair<int, char> > tempYellowLetters;
+	vector< int > greenLetterPositions; 
+	vector<char[5]> filteredwords;
+	for(int i = 0; i < 5; i++ ){
+		if(word_colours[i] == 'Y'){
+			yellowLetters.push_back(make_pair(i,entered_word[i]));
+		}
+		else if(word_colours[i] == 'G'){
+			greenLetterPositions.push_back(i);
+		}
+	}
+	for(int i = 0; i < word_array.size(); i++){
+		tempYellowLetters = yellowLetters;
+		for(int j = 0; j < 5; j++){
+			for(int k = 0; k < greenLetterPositions.size(); k++){
+				if(j = greenLetterPositions[k]) {
+					goto skipLetter;
+				}
+			}
+			for(int k = 0; k < tempYellowLetters.size(); k++){
+				if(all_words[i][j] == tempYellowLetters[k].second && j != tempYellowLetters[k].first){
+					tempYellowLetters.erase(tempYellowLetters.begin()+k);
+					goto skipLetter;
+				}
+				else if(all_words[i][j] == tempYellowLetters[k].second && j == tempYellowLetters[k].first){
+					goto skipWord;
+				}
+			}
+			skipLetter:
+		}
+		if(tempYellowLetters.size()==0){
+			filteredwords.push_back(filteredwords[i]);
+		}
+		skipWord:
+	}
+	word_array.clear();
+	word_array = filteredwords;
 }
