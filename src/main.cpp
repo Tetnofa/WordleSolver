@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <functional>
+
 
 using namespace std;
 
@@ -14,6 +16,7 @@ bool LoadInitialVector();
 string getWord();
 string getWordColours();
 bool checkValidWord(string word);
+bool contains_non_alpha(string entered_word){
 //bool checkValidColours();
 
 int main(int argc, const char * argv[]) {
@@ -65,7 +68,10 @@ string getWord(){
     
         if (tried_word.size()==5){
             if (checkValidWord(tried_word)==true){return tried_word;}
-            else {
+            else if(contains_non_alpha(tried_word)){
+				cout << "Error: Non Letters Used"
+			}
+			else {
                 cout << "Error: Not a Word" << endl;
             }
         }
@@ -80,7 +86,7 @@ string getWordColours(){
     string word_colours;
     
     while(1){
-        cout << "Enter Word: ";
+        cout << "Enter Letter Colours: ";
         cin >> word_colours;
     
         if (word_colours.size()==5){
@@ -100,4 +106,9 @@ bool checkValidWord(string entered_word){
         }
     }
     return false;
+}
+
+bool contains_non_alpha(string entered_word){
+	return std::find_if(entered_word.begin(), entered_word.end(),
+                   std::not1(std::ptr_fun((int(*)(int))std::isalpha))) != entered_word.end();
 }
