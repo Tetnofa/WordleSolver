@@ -8,7 +8,7 @@
 
 using namespace std;
 
-vector<array<char,5>> word_array;
+vector<char[5]> word_array;
 vector<string> all_words;
 
 //function declarations
@@ -16,7 +16,7 @@ bool LoadInitialVector();
 string getWord();
 string getWordColours();
 bool checkValidWord(string word);
-bool contains_non_alpha(string entered_word){
+bool contains_non_alpha(string entered_word);
 //bool checkValidColours();
 
 int main(int argc, const char * argv[]) {
@@ -35,7 +35,7 @@ int main(int argc, const char * argv[]) {
 
 bool LoadInitialVector(){
     ifstream allWords;
-    array <char,5> eachWord;
+    char eachWord[5];
     //change file path accordingly when running 
     allWords.open("wordle_dict.txt");
     
@@ -69,7 +69,7 @@ string getWord(){
         if (tried_word.size()==5){
             if (checkValidWord(tried_word)==true){return tried_word;}
             else if(contains_non_alpha(tried_word)){
-				cout << "Error: Non Letters Used"
+				cout << "Error: Non Letters Used"<<endl;
 			}
 			else {
                 cout << "Error: Not a Word" << endl;
