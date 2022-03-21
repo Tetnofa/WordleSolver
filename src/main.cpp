@@ -101,4 +101,3 @@ bool checkValidWord(string entered_word){
     }
     return false;
 }
-//test
