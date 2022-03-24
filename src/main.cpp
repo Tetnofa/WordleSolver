@@ -6,15 +6,15 @@
 
 using namespace std;
 
-vector<array<char,5>> word_array;
+vector<array<char,5> > word_array;
 vector<string> global_all_words;
 vector<string> all_words;
 vector<string> no_black_letters;
 vector<char> blackLetters;
 vector<string> noBlackLetters;
-vector<pair<char, int>> greenLetters;
+vector<pair<char, int> > greenLetters;
 vector<string> accountedForGreen;
-vector<pair<char, int>> yellowLetters;
+vector<pair<char, int> > yellowLetters;
 vector<string> allPossibleWords;
 
 
@@ -209,6 +209,7 @@ void GreenLetters(string word){
 void YellowLetters(string word){
     for (int i = 0; i<accountedForGreen.size(); i++){ //looping through al words
         int countOfYellow = 0;
+        int maxYellowColours = yellowLetters.size();
         for (int j = 0; j<5; j++){ //looping through each letter of each word
             for (int k = 0; k< yellowLetters.size(); k++){
                 char letter = yellowLetters[k].first;
@@ -216,10 +217,11 @@ void YellowLetters(string word){
                 
                 if (accountedForGreen[i][j] == letter && j != position){
                     countOfYellow++;
+                    yellowLetters.erase(yellowLetters.begin()+k);
                 }
             }
         }
-        if (countOfYellow==yellowLetters.size()){
+        if (countOfYellow==maxYellowColours){
             //cout << accountedForGreen[i] << endl;
             allPossibleWords.push_back(accountedForGreen[i]);}
         nextWord:;
