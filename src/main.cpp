@@ -15,6 +15,7 @@ vector<string> noBlackLetters;
 vector<pair<char, int> > greenLetters;
 vector<string> accountedForGreen;
 vector<pair<char, int> > yellowLetters;
+vector<pair<char, int> > tempYellowLetters;
 vector<string> allPossibleWords;
 
 
@@ -207,17 +208,18 @@ void GreenLetters(string word){
 }
 
 void YellowLetters(string word){
+    int maxYellowColours = yellowLetters.size();
     for (int i = 0; i<accountedForGreen.size(); i++){ //looping through al words
         int countOfYellow = 0;
-        int maxYellowColours = yellowLetters.size();
+        tempYellowLetters = yellowLetters;
         for (int j = 0; j<5; j++){ //looping through each letter of each word
-            for (int k = 0; k< yellowLetters.size(); k++){
-                char letter = yellowLetters[k].first;
-                int position = yellowLetters[k].second;
+            for (int k = 0; k< tempYellowLetters.size(); k++){
+                char letter = tempYellowLetters[k].first;
+                int position = tempYellowLetters[k].second;
                 
                 if (accountedForGreen[i][j] == letter && j != position){
                     countOfYellow++;
-                    yellowLetters.erase(yellowLetters.begin()+k);
+                    tempYellowLetters.erase(tempYellowLetters.begin()+k);
                 }
             }
         }
